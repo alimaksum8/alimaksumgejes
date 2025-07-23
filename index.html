@@ -3,240 +3,501 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generator Judul & Deskripsi YouTube</title>
+    <title>Pondok Pesantren Darul Huda Pengarang - Membentuk Generasi Qur'ani</title>
+    
+    <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide-react@latest/dist/lucide-react.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom Styles -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
         }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border-left-color: #fff;
-            animation: spin 1s ease infinite;
+        .hero-gradient {
+            background: linear-gradient(to right, rgba(20, 184, 166, 0.9), rgba(6, 95, 70, 0.9));
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .section-title {
+            font-weight: 700;
+            font-size: 2.25rem; /* text-4xl */
+            line-height: 2.5rem;
+            color: #1e293b; /* slate-800 */
         }
-        textarea {
-            resize: vertical;
+        .section-subtitle {
+            font-size: 1.125rem; /* text-lg */
+            color: #475569; /* slate-600 */
+            margin-top: 1rem;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .cta-primary {
+            background-color: #0d9488; /* teal-600 */
+            color: white;
+        }
+        .cta-primary:hover {
+            background-color: #0f766e; /* teal-700 */
+        }
+        .cta-secondary {
+            background-color: transparent;
+            color: #0d9488; /* teal-600 */
+            border: 2px solid #0d9488;
+        }
+        .cta-secondary:hover {
+            background-color: #ccfbf1; /* teal-50 */
+        }
+        .news-card-content {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white antialiased">
+<body>
 
-    <div class="container mx-auto max-w-4xl px-4 py-8 md:py-12">
-        
-        <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text">
-                Generator Judul & Deskripsi YouTube
-            </h1>
-            <p class="text-gray-400 mt-2">Creasi by Ali Maksum Gejes</p>
-        </div>
-
-        <!-- Input Section -->
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-8">
-            <label for="video-theme" class="block text-lg font-semibold mb-2 text-gray-300">Tema Video</label>
-            <textarea id="video-theme" rows="3" class="w-full bg-gray-700 border border-gray-600 rounded-md p-3 text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200" placeholder="Contoh: review smartphone gaming terbaru, cara memasak nasi goreng spesial, tutorial makeup untuk pemula"></textarea>
-            
-            <button id="generate-title-btn" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition duration-200">
-                <span id="btn-text">Buat Judul</span>
-                <div id="btn-spinner" class="spinner hidden ml-3"></div>
+    <!-- Header / Navigation Bar -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-5 py-2 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-3">
+                <img src="https://i.ibb.co/QFj6dvk/Logo-Yayasan.png" alt="Logo Darul Huda" class="h-14 flex-shrink-0">
+                <div class="flex flex-col">
+                    <span class="block font-bold text-lg leading-tight text-teal-700">PON-PES DARUL HUDA</span>
+                    <span class="block text-sm leading-tight text-gray-600">PENGARANG</span>
+                </div>
+            </a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#beranda" class="text-gray-600 hover:text-teal-600 transition">Beranda</a>
+                <a href="#tentang" class="text-gray-600 hover:text-teal-600 transition">Tentang Kami</a>
+                <a href="#program" class="text-gray-600 hover:text-teal-600 transition">Program</a>
+                <a href="#berita" class="text-gray-600 hover:text-teal-600 transition">Berita</a>
+                <a href="#galeri" class="text-gray-600 hover:text-teal-600 transition">Galeri</a>
+            </div>
+            <a href="#pendaftaran" class="hidden md:block cta-button cta-primary">
+                Pendaftaran
+            </a>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden">
+                <i data-lucide="menu" class="w-6 h-6 text-gray-700"></i>
             </button>
-            <div id="error-message" class="text-red-400 mt-2 text-sm text-center"></div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-5 pb-4">
+            <a href="#beranda" class="block py-2 text-gray-600 hover:text-teal-600">Beranda</a>
+            <a href="#tentang" class="block py-2 text-gray-600 hover:text-teal-600">Tentang Kami</a>
+            <a href="#program" class="block py-2 text-gray-600 hover:text-teal-600">Program</a>
+            <a href="#berita" class="block py-2 text-gray-600 hover:text-teal-600">Berita</a>
+            <a href="#galeri" class="block py-2 text-gray-600 hover:text-teal-600">Galeri</a>
+            <a href="#pendaftaran" class="block mt-4 cta-button cta-primary w-full">Pendaftaran</a>
         </div>
+    </header>
 
-        <!-- Results Section -->
-        <div id="results-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Result cards will be injected here by JavaScript -->
+    <main>
+        <!-- Hero Section / Latest News -->
+        <section id="beranda" class="py-20 bg-white">
+            <div class="container mx-auto px-5">
+                <div class="text-center mb-12">
+                    <h1 class="section-title">Informasi Terbaru</h1>
+                    <p class="section-subtitle max-w-3xl mx-auto">Ikuti perkembangan dan kegiatan terkini dari Pondok Pesantren Darul Huda Pengarang.</p>
+                </div>
+                
+                <!-- Container for dynamic news content -->
+                <div id="latest-news-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Placeholder cards -->
+                    <div class="bg-slate-200 animate-pulse h-96 rounded-lg"></div>
+                    <div class="bg-slate-200 animate-pulse h-96 rounded-lg"></div>
+                    <div class="bg-slate-200 animate-pulse h-96 rounded-lg"></div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <a href="#berita" class="cta-button cta-secondary">Lihat Semua Berita</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us & Contact Section -->
+        <section id="tentang" class="py-20 bg-slate-50">
+            <div class="container mx-auto px-5">
+                <!-- About Us Content -->
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <img src="https://placehold.co/600x400/34D399/FFFFFF?text=Kegiatan+Belajar" alt="Kegiatan Belajar Santri" class="rounded-xl shadow-lg w-full">
+                    </div>
+                    <div>
+                        <h2 class="section-title">Selamat Datang di Darul Huda</h2>
+                        <p class="section-subtitle">Sejak didirikan, kami mendedikasikan diri untuk pendidikan Islam yang seimbang antara ilmu dunia dan akhirat.</p>
+                        <p class="mt-4 text-gray-600">Visi kami adalah menjadi lembaga pendidikan Islam terdepan dalam mencetak kader-kader umat yang berkualitas, mandiri, dan bermanfaat bagi masyarakat. Misi kami meliputi penyelenggaraan pendidikan tahfidz yang terstruktur, pengkajian kitab kuning, serta pembinaan akhlak dan kemandirian santri.</p>
+                        <div class="mt-6 flex space-x-4">
+                            <div class="flex items-center">
+                                <i data-lucide="book-open-check" class="w-8 h-8 text-teal-600"></i>
+                                <span class="ml-2 font-semibold text-gray-700">Kurikulum Terpadu</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i data-lucide="shield-check" class="w-8 h-8 text-teal-600"></i>
+                                <span class="ml-2 font-semibold text-gray-700">Lingkungan Islami</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Content (Merged) -->
+                <div class="mt-20">
+                    <div class="text-center">
+                        <h3 class="text-3xl font-bold text-slate-800">Hubungi Kami</h3>
+                        <p class="section-subtitle max-w-3xl mx-auto">Kami siap menjawab pertanyaan Anda seputar pendaftaran, program, atau informasi lainnya.</p>
+                    </div>
+                    <div class="mt-12 grid md:grid-cols-2 gap-12">
+                        <!-- Dynamic Contact Info -->
+                        <div id="contact-info-container" class="space-y-6">
+                            <!-- Placeholder -->
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-slate-200 rounded animate-pulse"></div>
+                                <div class="ml-4 flex-1">
+                                    <div class="h-6 bg-slate-200 rounded animate-pulse w-1/3"></div>
+                                    <div class="h-4 bg-slate-200 rounded animate-pulse mt-2 w-2/3"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-slate-200 rounded animate-pulse"></div>
+                                <div class="ml-4 flex-1">
+                                    <div class="h-6 bg-slate-200 rounded animate-pulse w-1/3"></div>
+                                    <div class="h-4 bg-slate-200 rounded animate-pulse mt-2 w-2/3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Contact Form -->
+                        <div class="bg-white p-8 rounded-xl shadow-lg">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6">Kirim Pesan</h3>
+                            <form action="#" method="POST" class="space-y-4">
+                                <div>
+                                    <label for="name" class="sr-only">Nama</label>
+                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap Anda" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                </div>
+                                <div>
+                                    <label for="email" class="sr-only">Email</label>
+                                    <input type="email" id="email" name="email" placeholder="Alamat Email Anda" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                                </div>
+                                <div>
+                                    <label for="message" class="sr-only">Pesan</label>
+                                    <textarea id="message" name="message" rows="5" placeholder="Tulis pesan Anda di sini..." class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500"></textarea>
+                                </div>
+                                <button type="submit" class="cta-button cta-primary w-full">Kirim Pesan</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Programs Section -->
+        <section id="program" class="py-20 bg-white">
+            <div class="container mx-auto px-5 text-center">
+                <h2 class="section-title">Program Unggulan Kami</h2>
+                <p class="section-subtitle max-w-3xl mx-auto">Kami menyediakan program pendidikan yang komprehensif untuk memenuhi kebutuhan santri.</p>
+                <div id="programs-container" class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Placeholder Cards -->
+                    <div class="bg-slate-200 animate-pulse h-64 rounded-xl"></div>
+                    <div class="bg-slate-200 animate-pulse h-64 rounded-xl"></div>
+                    <div class="bg-slate-200 animate-pulse h-64 rounded-xl"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section (for all news) -->
+        <section id="berita" class="py-20 bg-slate-50">
+             <div class="container mx-auto px-5">
+                <div class="text-center mb-12">
+                    <h2 class="section-title">Arsip Berita</h2>
+                    <p class="section-subtitle max-w-3xl mx-auto">Jelajahi semua berita dan pengumuman yang pernah kami terbitkan.</p>
+                </div>
+                <div id="all-news-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Placeholder cards -->
+                    <div class="bg-slate-200 animate-pulse h-96 rounded-lg"></div>
+                    <div class="bg-slate-200 animate-pulse h-96 rounded-lg"></div>
+                    <div class="bg-slate-200 animate-pulse h-96 rounded-lg"></div>
+                    <div class="bg-slate-200 animate-pulse h-96 rounded-lg"></div>
+                    <div class="bg-slate-200 animate-pulse h-96 rounded-lg"></div>
+                    <div class="bg-slate-200 animate-pulse h-96 rounded-lg"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="galeri" class="py-20 bg-white">
+            <div class="container mx-auto px-5 text-center">
+                <h2 class="section-title">Galeri Kegiatan Pesantren</h2>
+                <p class="section-subtitle max-w-3xl mx-auto">Momen-momen berharga dari kehidupan dan aktivitas santri di Pondok Pesantren Darul Huda.</p>
+                <div id="gallery-container" class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <!-- Placeholder Images -->
+                    <div class="bg-slate-200 animate-pulse w-full h-48 rounded-lg"></div>
+                    <div class="bg-slate-200 animate-pulse w-full h-48 rounded-lg"></div>
+                    <div class="bg-slate-200 animate-pulse w-full h-48 rounded-lg"></div>
+                    <div class="bg-slate-200 animate-pulse w-full h-48 rounded-lg"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action (Registration) Section -->
+        <section id="pendaftaran" class="py-20 hero-gradient text-white">
+            <div class="container mx-auto px-5 text-center">
+                <h2 class="text-4xl font-bold">Bergabunglah Bersama Kami</h2>
+                <p class="mt-4 text-lg max-w-2xl mx-auto">Pendaftaran santri baru telah dibuka. Jadilah bagian dari keluarga besar Darul Huda dan wujudkan cita-cita menjadi penghafal Al-Qur'an.</p>
+                <div class="mt-8">
+                    <a href="#" class="cta-button bg-white text-teal-700 text-lg hover:bg-gray-200">Daftar Sekarang</a>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-white">
+        <div class="container mx-auto px-5 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div class="col-span-1 md:col-span-2">
+                    <h3 class="text-2xl font-bold text-white">Darul Huda Pengarang</h3>
+                    <p class="mt-4 text-slate-300">Lembaga pendidikan Islam yang berfokus pada pencetakan generasi Qur'ani yang unggul dalam ilmu dan akhlak.</p>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold">Tautan Cepat</h4>
+                    <ul class="mt-4 space-y-2">
+                        <li><a href="#tentang" class="text-slate-300 hover:text-white">Tentang Kami</a></li>
+                        <li><a href="#program" class="text-slate-300 hover:text-white">Program</a></li>
+                        <li><a href="#pendaftaran" class="text-slate-300 hover:text-white">Pendaftaran</a></li>
+                        <li><a href="#galeri" class="text-slate-300 hover:text-white">Galeri</a></li>
+                    </ul>
+                </div>
+                <!-- Social Media -->
+                <div>
+                    <h4 class="text-lg font-semibold">Ikuti Kami</h4>
+                    <div class="mt-4 flex space-x-4">
+                        <a href="#" class="text-slate-300 hover:text-white"><i data-lucide="facebook" class="w-6 h-6"></i></a>
+                        <a href="#" class="text-slate-300 hover:text-white"><i data-lucide="instagram" class="w-6 h-6"></i></a>
+                        <a href="#" class="text-slate-300 hover:text-white"><i data-lucide="youtube" class="w-6 h-6"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-slate-700 pt-8 text-center text-slate-400">
+                <p>&copy; 2025 Pondok Pesantren Darul Huda Pengarang. All Rights Reserved.</p>
+            </div>
         </div>
+    </footer>
 
-    </div>
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, orderBy, limit, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+        
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyACjTaCZTne1IQ-ZRcZGrQQRstKjwwlYVk",
+            authDomain: "ponpes-darul-huda-pengarang.firebaseapp.com",
+            projectId: "ponpes-darul-huda-pengarang",
+            storageBucket: "ponpes-darul-huda-pengarang.appspot.com",
+            messagingSenderId: "529939190280",
+            appId: "1:529939190280:web:9a5d77beb9fa7fe52137bd",
+            measurementId: "G-LFPKZHCS0Z"
+        };
 
-    <script>
-        // --- KONFIGURASI ---
-        const API_KEY = "AIzaSyBAgdg0BXPD-iIGzTjgplLOes85VSj1UVY"; // API Key yang Anda berikan
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-        // --- ELEMEN DOM ---
-        const videoThemeInput = document.getElementById('video-theme');
-        const generateTitleBtn = document.getElementById('generate-title-btn');
-        const btnText = document.getElementById('btn-text');
-        const btnSpinner = document.getElementById('btn-spinner');
-        const resultsContainer = document.getElementById('results-container');
-        const errorMessage = document.getElementById('error-message');
-
-        /**
-         * Fungsi untuk memanggil Gemini API
-         * @param {string} prompt - Perintah yang akan dikirim ke AI
-         * @returns {Promise<string>} - Teks yang dihasilkan oleh AI
-         */
-        async function callGeminiAPI(prompt) {
+        // --- Function to fetch and render News ---
+        async function renderNews() {
+            const latestNewsContainer = document.getElementById('latest-news-container');
+            const allNewsContainer = document.getElementById('all-news-container');
+            
+            const newsCollection = collection(db, 'news');
+            const q = query(newsCollection, orderBy('createdAt', 'desc'));
+            
             try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{ text: prompt }]
-                        }]
-                    })
+                const querySnapshot = await getDocs(q);
+                let latestNewsHtml = '';
+                let allNewsHtml = '';
+                let count = 0;
+
+                if (querySnapshot.empty) {
+                    const noNewsHtml = `<p class="text-slate-500 text-center col-span-full">Belum ada berita yang diterbitkan.</p>`;
+                    latestNewsContainer.innerHTML = noNewsHtml;
+                    allNewsContainer.innerHTML = noNewsHtml;
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const post = doc.data();
+                    const postDate = post.createdAt ? new Date(post.createdAt.seconds * 1000).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+                    
+                    const cardHtml = `
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden flex flex-col">
+                            <img src="${post.imageUrl || 'https://placehold.co/600x400/e2e8f0/94a3b8?text=Darul+Huda'}" 
+                                 alt="${post.title}" 
+                                 class="w-full h-56 object-cover"
+                                 onerror="this.onerror=null;this.src='https://placehold.co/600x400/e2e8f0/94a3b8?text=Gambar+Tidak+Tersedia';">
+                            <div class="p-6 flex-grow flex flex-col">
+                                <h3 class="text-xl font-bold text-gray-800 mb-2">${post.title}</h3>
+                                <p class="text-sm text-gray-500 mb-4">${postDate}</p>
+                                <p class="text-gray-600 news-card-content flex-grow">${post.content}</p>
+                                <a href="#" class="mt-4 font-semibold text-teal-600 hover:text-teal-700 self-start">Baca Selengkapnya &rarr;</a>
+                            </div>
+                        </div>
+                    `;
+
+                    // Add to all news
+                    allNewsHtml += cardHtml;
+
+                    // Add to latest news (first 3)
+                    if (count < 3) {
+                        latestNewsHtml += cardHtml;
+                        count++;
+                    }
                 });
 
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error.message || `HTTP error! status: ${response.status}`);
-                }
+                latestNewsContainer.innerHTML = latestNewsHtml || `<p class="text-slate-500 text-center col-span-full">Belum ada berita yang diterbitkan.</p>`;
+                allNewsContainer.innerHTML = allNewsHtml || `<p class="text-slate-500 text-center col-span-full">Belum ada berita yang diterbitkan.</p>`;
 
-                const data = await response.json();
-                
-                if (data.candidates && data.candidates.length > 0 && data.candidates[0].content.parts.length > 0) {
-                    return data.candidates[0].content.parts[0].text;
+            } catch (error) {
+                console.error("Error fetching news: ", error);
+                const errorHtml = `<p class="text-red-500 text-center col-span-full">Gagal memuat berita. Silakan coba lagi nanti.</p>`;
+                latestNewsContainer.innerHTML = errorHtml;
+                allNewsContainer.innerHTML = errorHtml;
+            }
+        }
+
+        // --- Function to fetch and render Programs ---
+        async function renderPrograms() {
+            const container = document.getElementById('programs-container');
+            const programsCollection = collection(db, 'programs');
+            try {
+                const querySnapshot = await getDocs(programsCollection);
+                let html = '';
+                if (querySnapshot.empty) {
+                    container.innerHTML = `<p class="text-slate-500 text-center col-span-full">Program belum tersedia.</p>`;
+                    return;
+                }
+                querySnapshot.forEach((doc) => {
+                    const program = doc.data();
+                    html += `
+                        <div class="bg-white p-8 rounded-xl shadow-lg text-left transform hover:-translate-y-2 transition-transform duration-300">
+                            <i data-lucide="${program.icon || 'book-marked'}" class="w-12 h-12 text-teal-600 mb-4"></i>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">${program.title}</h3>
+                            <p class="text-gray-600">${program.description}</p>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+                lucide.createIcons(); // Re-initialize icons
+            } catch (error) {
+                console.error("Error fetching programs: ", error);
+                container.innerHTML = `<p class="text-red-500 text-center col-span-full">Gagal memuat program.</p>`;
+            }
+        }
+
+        // --- Function to fetch and render Gallery ---
+        async function renderGallery() {
+            const container = document.getElementById('gallery-container');
+            const galleryCollection = collection(db, 'gallery');
+            const q = query(galleryCollection, orderBy('createdAt', 'desc'), limit(8));
+            try {
+                const querySnapshot = await getDocs(q);
+                let html = '';
+                if (querySnapshot.empty) {
+                    container.innerHTML = `<p class="text-slate-500 text-center col-span-full">Belum ada foto di galeri.</p>`;
+                    return;
+                }
+                querySnapshot.forEach((doc) => {
+                    const item = doc.data();
+                    html += `
+                        <img src="${item.imageUrl}" alt="${item.altText || 'Galeri Darul Huda'}" class="rounded-lg shadow-md w-full h-full object-cover cursor-pointer transform hover:scale-105 transition-transform">
+                    `;
+                });
+                container.innerHTML = html;
+            } catch (error) {
+                console.error("Error fetching gallery: ", error);
+                container.innerHTML = `<p class="text-red-500 text-center col-span-full">Gagal memuat galeri.</p>`;
+            }
+        }
+
+        // --- Function to fetch and render Contact Info ---
+        async function renderContactInfo() {
+            const container = document.getElementById('contact-info-container');
+            if (!container) return;
+
+            const docRef = doc(db, "site_content", "contact_info");
+            try {
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const contact = docSnap.data();
+                    const html = `
+                        <div class="flex items-start">
+                            <i data-lucide="map-pin" class="w-10 h-10 text-teal-600 mt-1 flex-shrink-0"></i>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-semibold text-gray-800">Alamat</h3>
+                                <p class="text-gray-600">${contact.address || 'Alamat belum diatur.'}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i data-lucide="phone" class="w-10 h-10 text-teal-600 mt-1 flex-shrink-0"></i>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-semibold text-gray-800">Telepon</h3>
+                                <p class="text-gray-600">${contact.phone1 || ''}</p>
+                                <p class="text-gray-600">${contact.phone2 || ''}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i data-lucide="mail" class="w-10 h-10 text-teal-600 mt-1 flex-shrink-0"></i>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-semibold text-gray-800">Email</h3>
+                                <p class="text-gray-600">${contact.email || 'Email belum diatur.'}</p>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML = html;
+                    lucide.createIcons();
                 } else {
-                    // Handle cases where the response structure is unexpected or content is missing
-                    // This can happen with safety settings blocks
-                    if (data.promptFeedback && data.promptFeedback.blockReason) {
-                         throw new Error(`Permintaan diblokir karena: ${data.promptFeedback.blockReason}. Coba dengan tema lain.`);
-                    }
-                    throw new Error("Gagal mendapatkan respons dari AI. Coba lagi.");
+                    container.innerHTML = "<p>Informasi kontak tidak ditemukan.</p>";
                 }
-
             } catch (error) {
-                console.error("Error calling Gemini API:", error);
-                throw error; // Re-throw the error to be caught by the caller
+                console.error("Error fetching contact info: ", error);
+                container.innerHTML = "<p class='text-red-500'>Gagal memuat informasi kontak.</p>";
             }
-        }
-
-        /**
-         * Menampilkan atau menyembunyikan status loading pada tombol utama
-         * @param {boolean} isLoading - Status loading
-         */
-        function setMainButtonLoading(isLoading) {
-            generateTitleBtn.disabled = isLoading;
-            btnSpinner.classList.toggle('hidden', !isLoading);
-            btnText.textContent = isLoading ? 'Membuat...' : 'Buat Judul';
         }
         
-        /**
-         * Membersihkan pesan error dan hasil sebelumnya
-         */
-        function clearPreviousState() {
-            errorMessage.textContent = '';
-            resultsContainer.innerHTML = '';
-        }
+        // --- On Page Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNews();
+            renderPrograms();
+            renderGallery();
+            renderContactInfo();
 
-        /**
-         * Menangani klik pada tombol "Buat Judul"
-         */
-        generateTitleBtn.addEventListener('click', async () => {
-            const theme = videoThemeInput.value.trim();
-            if (!theme) {
-                errorMessage.textContent = 'Tema video tidak boleh kosong.';
-                videoThemeInput.focus();
-                return;
-            }
-
-            clearPreviousState();
-            setMainButtonLoading(true);
-
-            const prompt = `Buatkan 4 opsi judul video YouTube yang sangat menarik dan memiliki potensi klikbait tinggi tentang tema: "${theme}". Prioritaskan kata kunci yang paling banyak dicari orang namun dengan kompetitor yang lebih rendah. Berikan jawaban HANYA dalam format daftar bernomor (contoh: 1. Judul Pertama). Jangan sertakan teks pembuka, penutup, atau penjelasan apapun.`;
-
-            try {
-                const resultText = await callGeminiAPI(prompt);
-                const titles = resultText
-                    .split('\n')
-                    .map(line => line.replace(/^\d+\.\s*/, '').trim()) // Membersihkan nomor dan spasi
-                    .filter(line => line.length > 0); // Menghapus baris kosong
-
-                displayResults(titles);
-
-            } catch (error) {
-                errorMessage.textContent = `Terjadi kesalahan: ${error.message}`;
-            } finally {
-                setMainButtonLoading(false);
-            }
-        });
-        
-        /**
-         * Menampilkan hasil judul di dalam container
-         * @param {string[]} titles - Array berisi judul-judul video
-         */
-        function displayResults(titles) {
-            if (titles.length === 0) {
-                errorMessage.textContent = "AI tidak memberikan hasil judul. Coba lagi dengan tema yang berbeda.";
-                return;
-            }
-            
-            titles.slice(0, 4).forEach((title, index) => {
-                const card = document.createElement('div');
-                card.className = 'bg-gray-800 p-5 rounded-lg shadow-lg flex flex-col space-y-3';
-                card.innerHTML = `
-                    <div>
-                        <label for="title-${index}" class="block text-sm font-semibold text-gray-400 mb-1">Hasil Judul ${index + 1}</label>
-                        <textarea id="title-${index}" rows="2" class="w-full bg-gray-700 border border-gray-600 rounded-md p-2 text-white focus:ring-1 focus:ring-blue-500">${title}</textarea>
-                    </div>
-                    <button data-index="${index}" class="generate-desc-btn w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-500 text-white font-semibold py-2 px-3 rounded-md flex items-center justify-center text-sm transition duration-200">
-                        <span class="btn-desc-text">Buat Deskripsi</span>
-                        <div class="spinner btn-desc-spinner hidden ml-2" style="width:16px; height:16px;"></div>
-                    </button>
-                    <div class="desc-container">
-                        <label for="desc-${index}" class="block text-sm font-semibold text-gray-400 mb-1">Hasil Deskripsi</label>
-                        <textarea id="desc-${index}" rows="6" class="w-full bg-gray-700 border border-gray-600 rounded-md p-2 text-white focus:ring-1 focus:ring-blue-500" placeholder="Deskripsi akan muncul di sini..."></textarea>
-                    </div>
-                `;
-                resultsContainer.appendChild(card);
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
-        }
 
-        /**
-         * Event listener untuk semua tombol "Buat Deskripsi" menggunakan event delegation
-         */
-        resultsContainer.addEventListener('click', async (event) => {
-            const target = event.target.closest('.generate-desc-btn');
-            if (!target) return;
-
-            const index = target.dataset.index;
-            const titleInput = document.getElementById(`title-${index}`);
-            const descInput = document.getElementById(`desc-${index}`);
-            const title = titleInput.value.trim();
-            
-            if (!title) {
-                alert('Judul tidak boleh kosong untuk membuat deskripsi.');
-                return;
-            }
-
-            // --- Set loading state for description button ---
-            target.disabled = true;
-            const descBtnText = target.querySelector('.btn-desc-text');
-            const descBtnSpinner = target.querySelector('.btn-desc-spinner');
-            descBtnText.textContent = 'Membuat...';
-            descBtnSpinner.classList.remove('hidden');
-            descInput.value = ''; // Clear previous description
-
-            const prompt = `Buatkan sebuah deskripsi video YouTube yang menarik dan SEO-friendly untuk video dengan judul: "${title}". Deskripsi harus menyertakan kata kunci yang paling banyak dicari terkait judul tersebut, jelaskan isi video secara singkat, dan diakhiri dengan ajakan yang kuat untuk menekan tombol like, comment, dan subscribe ke channel. Buat dalam beberapa paragraf agar mudah dibaca.`;
-
-            try {
-                const description = await callGeminiAPI(prompt);
-                descInput.value = description.trim();
-            } catch (error) {
-                descInput.value = `Gagal membuat deskripsi: ${error.message}`;
-            } finally {
-                // --- Reset loading state for description button ---
-                target.disabled = false;
-                descBtnText.textContent = 'Buat Deskripsi';
-                descBtnSpinner.classList.add('hidden');
-            }
+            // Initialize Lucide Icons
+            lucide.createIcons();
         });
-
     </script>
+
 </body>
 </html>
